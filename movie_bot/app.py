@@ -1,5 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate  # Asegura que Flask-Migrate esté importado
 from .db import db, db_config
 from .models import User, Message
 from .forms import ProfileForm
@@ -24,6 +26,9 @@ Bootstrap5(app)
 
 # Configurar la API de OpenAI
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Configurar Flask-Migrate
+migrate = Migrate(app, db)
 
 @app.route("/")
 def landing():
