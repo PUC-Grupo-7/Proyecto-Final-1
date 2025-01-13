@@ -58,8 +58,10 @@ cover/
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
+/db.sqlite3          # Ignorar solo la base de datos en la raíz del proyecto
+db.sqlite3-journal   # Ignorar archivos relacionados con SQLite
+!instance/db.sqlite3 # No ignorar la base de datos en la carpeta instance/
+
 
 # Flask stuff:
 instance/
