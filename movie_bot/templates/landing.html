@@ -1,0 +1,13 @@
+<!-- movie_bot/templates/landing.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1>Bienvenido a MovieBot</h1>
+    <p class="lead">El recomendador de películas que se adapta a tus gustos.</p>
+    <div class="mt-4">
+        <a href="{{ url_for('chat') }}" class="btn btn-primary btn-lg" aria-label="Ir al Chat">Ir al Chat</a>
+        <a href="{{ url_for('perfil') }}" class="btn btn-secondary btn-lg" aria-label="Editar Perfil">Editar Perfil</a>
+    </div>
+</div>
+{% endblock %}
