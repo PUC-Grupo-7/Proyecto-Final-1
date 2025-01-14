@@ -1,17 +1,17 @@
 import os
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate  # Asegura que Flask-Migrate esté importado
+from flask_migrate import Migrate
 from .db import db, db_config
 from .models import User, Message
 from .forms import ProfileForm
 import openai
-from openai.error import AuthenticationError, RateLimitError, OpenAIError  # Corrección de importación
+from openai.error import AuthenticationError, RateLimitError, OpenAIError
 from flask_bootstrap import Bootstrap5
 from dotenv import load_dotenv
 import logging
 
-# Cargar configuración del entorno
+# Cargar las variables del entorno desde el archivo .env (solo en local)
 load_dotenv()
 
 # Configurar logging
@@ -20,12 +20,13 @@ logger = logging.getLogger(__name__)
 
 # Inicialización de Flask
 app = Flask(__name__)
+# Cargar la clave secreta desde el archivo .env (para entorno local)
 app.secret_key = os.getenv("SECRET_KEY", "clave_secreta_predeterminada")
 db_config(app)
 Bootstrap5(app)
 
-# Configurar la API de OpenAI
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Configurar la API de OpenAI desde el entorno de Render
+openai.api_key = os.getenv("OPENAI_API_KEY")  # Render gestionará esta variable de entorno
 
 # Configurar Flask-Migrate
 migrate = Migrate(app, db)
@@ -76,7 +77,7 @@ def chat():
                 # Llamada a OpenAI (versión 1.0.0+)
                 response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",  # Cambiar a "gpt-4" si tienes acceso
-                    messages=[
+                    messages=[ 
                         {"role": "system", "content": prompt},
                         {"role": "user", "content": user_message}
                     ]
